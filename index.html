@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Rumor-Exercise</title>
+    <meta name="color-scheme" content="light dark" />
+    <link rel="stylesheet" href="public/root.css" />
+    <link rel="stylesheet" href="public/toggle.css" />
+  </head>
+  <body>
+    <!-- Theme toggle -->
+    <div class="tgl">
+      <div class="top sqp">
+        <div class="bas sqp">
+          <div class="sun sra">
+            <svg viewBox="1.5 0.5 23 23">
+              <use href="#ray-o" />
+              <use href="#ray-y" class="ray-trn" />
+            </svg>
+            <div class="sun-i srp"></div>
+          </div>
+          <div class="mon sra">
+            <div class="mon-i srp">
+              <svg viewBox="0 0 16 16"><path /></svg>
+            </div>
+          </div>
+          <div class="tng tng-l"></div>
+        </div>
+        <div class="frm sqp"></div>
+        <div
+          class="hnd sra knb-l"
+          tabindex="0"
+          onclick="knbClick()"
+          onkeydown="knbClick()"
+          title="Click to toggle dark mode"
+        >
+          <div class="knb sra">
+            <div class="knb-o sra"></div>
+            <div class="rng srp"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <svg class="zs">
+      <defs>
+        <path id="grd" />
+        <clipPath id="knb"><path /></clipPath>
+        <clipPath id="frm"><path /></clipPath>
+        <clipPath id="tng"><path /></clipPath>
+        <symbol id="ray-o"><path /></symbol>
+        <symbol id="ray-y"><path /></symbol>
+      </defs>
+    </svg>
+    <script defer src="toggle.js"></script>
+    <!-- Application -->
+    <div id="root"></div>
+    <script type="module" src="frontend/index.tsx"></script>
+  </body>
+</html>

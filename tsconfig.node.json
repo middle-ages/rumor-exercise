@@ -1,0 +1,17 @@
+{
+  "display": "Node.js Configuration",
+  "extends": [
+    "@tsconfig/strictest/tsconfig.json",
+    "@tsconfig/node-lts/tsconfig.json",
+    "@tsconfig/esm/tsconfig.json"
+  ],
+  "compilerOptions": {
+    "composite": true,
+    "moduleResolution": "NodeNext",
+    "outDir": "dist",
+    "esModuleInterop": true
+  },
+  "include": [
+    "backend"
+  ]
+}

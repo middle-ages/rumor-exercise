@@ -1,0 +1,58 @@
+html * {
+  transition: all 0.25s ease-in-out;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--page-bg);
+  margin: 0;
+  padding: 0;
+}
+
+clipPath > * {
+  clip-rule: evenodd;
+}
+
+/**
+ * abs: ABSolutely positioned
+ *  cc: Center Children
+ * sqr: SQuaRe, requires var(--w)
+ * sqp: SQuare Positioned, absolutely positioned, requires var(--w2)
+ * rnd: RouND
+ *  sz: Zero Sized
+ * sra: Square Round Absolute = sqr + rnd + abs 
+ * srp: Square Round Positioned = sra + sqp = sqr + rnd + abs + sqp
+ */
+
+/** abs - ABSolute */
+.abs,
+.sqp,
+.sra,
+.srp {
+  position: absolute;
+}
+
+.cc {
+  display: flex;
+  place-items: center;
+  justify-content: center;
+}
+
+.sqr,
+.sra,
+.srp {
+  width: var(--w);
+  height: var(--w);
+}
+
+.sqp,
+.srp {
+  top: var(--w2);
+  left: var(--w2);
+}
+
+.rnd,
+.sra,
+.srp {
+  border-radius: 50%;
+}

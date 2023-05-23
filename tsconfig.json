@@ -1,0 +1,16 @@
+{
+  "display": "Browser/IDE Bundler Configuration",
+  "extends": [
+    "@tsconfig/strictest/tsconfig.json",
+    "@tsconfig/vite-react/tsconfig.json"
+  ],
+  "compilerOptions": {
+    "composite": true,
+    "allowJs": true,
+    "tsBuildInfoFile": "dist/tsconfig.browser.tsbuildinfo"
+  },
+  "include": [
+    "frontend",
+    "vite.config.ts"
+  ]
+}

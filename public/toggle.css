@@ -1,0 +1,242 @@
+@import url("light.css");
+@import url("dark.css");
+
+:root {
+  --tgl-height: 44px;
+
+  --tgl-r: 24px;
+  --knb-r: 18px;
+  --frm-r: 16px;
+  --rng-r: 14px;
+  --fac-r: 12px;
+  --ico-r: 8px;
+
+  --tgl-h: calc(2 * var(--tgl-r));
+  --knb-s: calc(2 * var(--knb-r));
+  --frm-h: calc(2 * var(--frm-r));
+  --fac-s: calc(2 * var(--fac-r));
+  --ico-s: calc(2 * var(--ico-r));
+
+  --tgl-w: calc(var(--bas-w) + 2 * (var(--bas-o) + var(--tgl-o)));
+  --bas-r: calc(2 * var(--fac-s));
+  --bas-w: calc(var(--bas-r) + var(--fac-s));
+  --frm-w: calc(var(--bas-r) + var(--frm-h));
+  --tng-w: calc(var(--bas-w) + var(--bas-r));
+
+  --tgl-o: calc(var(--tgl-r) - var(--knb-r));
+  --bas-o: calc(var(--knb-r) - var(--fac-r));
+  --frm-o: calc(var(--knb-r) - var(--frm-r));
+  --ico-o: calc(var(--fac-r) - var(--ico-r));
+  --tng-l-o: calc(-1 * var(--bas-r));
+}
+
+.knb {
+  clip-path: url(#knb);
+}
+
+#knb > path {
+  d: path(
+    "m18 18 m0-18a1 1 0 000 36 1 1 0 000-36zm0 18m0-12a1 1 0 000 24 1 1 0 000-24z"
+  );
+}
+
+.sun,
+.hnd {
+  left: var(--bas-r);
+}
+
+.knb,
+.knb-o,
+.hnd {
+  --w: var(--knb-s);
+}
+
+.hnd {
+  --rng-s: calc(2 * var(--rng-r));
+  --rng-o: calc(var(--knb-r) - var(--rng-r));
+  cursor: pointer;
+}
+
+.hnd:active {
+  --rng-r: 13px;
+}
+
+.hnd:focus {
+  outline: solid #0000ff;
+  outline-width: 1px;
+  outline-offset: 3px;
+}
+
+.rng {
+  --w: var(--rng-s);
+  --w2: var(--rng-o);
+  filter: blur(0.3px);
+}
+
+.knb-l {
+  left: 0;
+}
+
+.mon,
+.sun {
+  --w: var(--fac-s);
+}
+
+.mon-i,
+.sun-i {
+  --w: var(--ico-s);
+  --w2: var(--ico-o);
+}
+
+.mon-i > svg > path {
+  d: path("m8 0a1 1 0 000 16 .25.4 1 110-16z");
+}
+
+#ray-o > path,
+#ray-y > path {
+  d: path(
+    "m17.1 18.7c-.5.5-.7 1.2-.5 1.9-.4-.6-1-1-1.7-1-1.1 0-2 .9-1.9 2 0-1.1-.9-2-2-2-.7 0-1.4.4-1.7 1 .2-.7 0-1.4-.5-1.9-.8-.8-2-.8-2.8 0 .8-.8.8-2.1 0-2.8-.5-.5-1.3-.7-1.9-.5.6-.4 1-1 1-1.7 0-1.1-.9-2-2-2 1.1 0 2-.9 2-2 0-.7-.4-1.4-1-1.7.7.2 1.4 0 2-.5.8-.8.8-2.1 0-2.8.8.8 2 .8 2.8 0 .5-.5.7-1.2.5-1.9.3.6 1 1 1.7 1 1.1 0 2-.9 2-2 0 1.1.9 2 2 2 .7 0 1.4-.4 1.7-1-.2.7 0 1.4.5 1.9.8.8 2 .8 2.8 0-.8.8-.8 2 0 2.8.5.5 1.2.7 1.9.5-.6.4-1 1-1 1.7 0 1.1.9 2 2 2-1.1 0-2 .9-2 2 0 .7.4 1.3 1 1.7-.7-.2-1.4 0-1.9.5-.8.8-.8 2.1 0 2.8-.8-.8-2-.8-2.8 0z"
+  );
+}
+
+.ray-trn {
+  transform-origin: 50% 50%;
+  transform: rotate(calc(45deg / 4));
+}
+
+.bas,
+.tng {
+  height: var(--fac-s);
+}
+
+.bas {
+  --w2: var(--bas-o);
+  width: var(--bas-w);
+  overflow: hidden;
+  opacity: 75%;
+}
+
+.bas,
+.tng {
+  border-radius: var(--fac-r);
+}
+
+.frm {
+  --w2: var(--frm-o);
+  width: var(--frm-w);
+  height: var(--frm-h);
+  border-radius: var(--frm-r);
+  clip-path: url(#frm);
+  opacity: 60%;
+}
+
+#frm > path {
+  d: path(
+    "m16 0a1 1 0 000 32h48a1 1 0 000-32z m0 4a1 1 0 000 24h48a1 1 0 000-24z"
+  );
+}
+
+.tng {
+  position: absolute;
+  left: 0;
+  width: var(--tng-w);
+  clip-path: url(#tng);
+}
+
+#tng > path {
+  d: path(
+    "m12 0a1 1 0 000 24h96a1 1 0 000-24zm48 0a1 1 0 000 24 1 1 0 000-24z"
+  );
+}
+
+.tng-l {
+  left: var(--tng-l-o);
+}
+
+.top {
+  --w2: var(--tgl-o);
+}
+
+.tgl {
+  position: relative;
+  user-select: none;
+  width: var(--tgl-w);
+  height: var(--tgl-h);
+  border-radius: var(--tgl-r);
+  margin-top: 2px;
+}
+
+.tgl {
+  box-sizing: content-box;
+}
+
+.hnd {
+  box-shadow: #00000060 1.2px 1.4px 2.4px 1.2px,
+    #00000090 0.5px 0.6px 1.5px 0.5px;
+}
+
+.hnd:hover {
+  filter: contrast(125%);
+  box-shadow: #00000080 1.2px 1.4px 2.4px 1.2px,
+    #000000b0 0.4px 0.5px 1.6px 0.4px;
+}
+
+.hnd:active {
+  box-shadow: #000000b0 0.4px 0.5px 1.4px 0.4px;
+  filter: contrast(140%);
+}
+
+.knb-o {
+  background: radial-gradient(
+    at top left,
+    #fff 0%,
+    #fff 10%,
+    #888 80%,
+    #555 100%
+  );
+}
+
+.rng {
+  background: conic-gradient(#888 0%, #999 20%, #ccc 35%, #666 85%, #888 100%);
+}
+
+.mon {
+  background: radial-gradient(at top left, #00c 0%, #006 60%, #001 100%);
+}
+
+.sun {
+  background: radial-gradient(at top left, #ccf 0%, #22c 80%, #002 100%);
+}
+
+.mon-i {
+  background: radial-gradient(at bottom right, #00d 0%, #005 60%, #002 100%);
+}
+
+.sun-i {
+  background: radial-gradient(at bottom right, #fe0 0%, #e90 70%, #b30 100%);
+}
+
+.mon-i > svg > path {
+  fill: #ffff55;
+}
+
+#ray-o > path {
+  fill: #ff8800;
+}
+
+#ray-y > path {
+  fill: #ffff00;
+}
+
+.bas {
+  background: linear-gradient(#777 0%, #888 20%, #aaa 80%, #ccc 100%);
+}
+
+.frm {
+  background: conic-gradient(#ccc 0%, #888 40%, #ccc 80%, #eee 90%, #ccc 100%);
+}
+
+.tng {
+  background: linear-gradient(#808080c0 0%, #a0a0a0e0 15%, #ccc 90%, #ddd 100%);
+  border: 1px solid #b0b0b0df;
+}

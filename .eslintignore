@@ -1,0 +1,5 @@
+.eslintrc.cjs
+coverage
+dist
+node_modules
+public
