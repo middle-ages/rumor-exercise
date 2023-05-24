@@ -51,6 +51,8 @@ const configure = ({
     // 1. turn OFF rules that are ON in default recommended sets
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/unbound-method': 'off',
+    '@typescript-eslint/no-empty-function': 'off',
     'arrow-body-style': 'off',
     'arrow-parens': 'off',
     'unicorn/no-array-callback-reference': 'off',
@@ -63,9 +65,11 @@ const configure = ({
       'error',
       {
         'allowList': {
-          'res': true,
           'Def': true,
           'Dir': true,
+          'Props': true,
+          'props': true,
+          'res': true,
         },
       },
     ],
@@ -106,7 +110,9 @@ module.exports = {
         project: 'tsconfig.json',
         plugins: ['react-refresh'],
         rules: {
+          'react/react-in-jsx-scope': 'off',
           'react-refresh/only-export-components': 'error',
+          '@typescript-eslint/naming-convention': 'off',
         }
       }),
     }

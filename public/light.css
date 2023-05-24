@@ -15,23 +15,23 @@ html[data-theme="light"] {
   --diagram-sep: #666;
 }
 
-html[data-theme="light"] .hnd {
+html[data-theme="light"] .handle {
   box-shadow: #00000060 1.2px 1.4px 2.4px 1.2px,
     #00000090 0.5px 0.6px 1.5px 0.5px;
 }
 
-html[data-theme="light"] .hnd:hover {
+html[data-theme="light"] .handle:hover {
   filter: contrast(125%);
   box-shadow: #00000080 1.2px 1.4px 2.4px 1.2px,
     #000000b0 0.4px 0.5px 1.6px 0.4px;
 }
 
-html[data-theme="light"] .hnd:active {
+html[data-theme="light"] .handle:active {
   box-shadow: #000000b0 0.4px 0.5px 1.4px 0.4px;
   filter: contrast(140%);
 }
 
-html[data-theme="light"] .knb-o {
+html[data-theme="light"] .knob-o {
   background: radial-gradient(
     at top left,
     #fff 0%,
@@ -41,11 +41,11 @@ html[data-theme="light"] .knb-o {
   );
 }
 
-html[data-theme="light"] .rng {
+html[data-theme="light"] .ring {
   background: conic-gradient(#888 0%, #999 20%, #ccc 35%, #666 85%, #888 100%);
 }
 
-html[data-theme="light"] .mon {
+html[data-theme="light"] .moon {
   background: radial-gradient(at top left, #00c 0%, #006 60%, #001 100%);
 }
 
@@ -53,35 +53,35 @@ html[data-theme="light"] .sun {
   background: radial-gradient(at top left, #ccf 0%, #22c 80%, #002 100%);
 }
 
-html[data-theme="light"] .mon-i {
+html[data-theme="light"] .moon-inner {
   background: radial-gradient(at bottom right, #00d 0%, #005 60%, #002 100%);
 }
 
-html[data-theme="light"] .sun-i {
+html[data-theme="light"] .sun-inner {
   background: radial-gradient(at bottom right, #fe0 0%, #e90 70%, #b30 100%);
 }
 
-html[data-theme="light"] .mon-i > svg > path {
+html[data-theme="light"] .moon-inner > svg > path {
   fill: #ffff55;
 }
 
-html[data-theme="light"] #ray-o > path {
+html[data-theme="light"] #ray-orange > path {
   fill: #ff8800;
 }
 
-html[data-theme="light"] #ray-y > path {
+html[data-theme="light"] #ray-yellow > path {
   fill: #ffff00;
 }
 
-html[data-theme="light"] .bas {
+html[data-theme="light"] .base {
   background: linear-gradient(#777 0%, #888 20%, #aaa 80%, #ccc 100%);
 }
 
-html[data-theme="light"] .frm {
+html[data-theme="light"] .frame {
   background: conic-gradient(#ccc 0%, #888 40%, #ccc 80%, #eee 90%, #ccc 100%);
 }
 
-html[data-theme="light"] .tng {
+html[data-theme="light"] .tongue {
   background: linear-gradient(#808080c0 0%, #a0a0a0e0 15%, #ccc 90%, #ddd 100%);
   border: 1px solid #b0b0b0df;
 }

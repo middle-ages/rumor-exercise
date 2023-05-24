@@ -4,54 +4,67 @@
     <meta charset="UTF-8" />
     <title>Rumor-Exercise</title>
     <meta name="color-scheme" content="light dark" />
-    <link rel="stylesheet" href="public/root.css" />
-    <link rel="stylesheet" href="public/toggle.css" />
+    <link rel="stylesheet" href="/root.css" />
+    <link rel="stylesheet" href="/toggle.css" />
   </head>
   <body>
     <!-- Theme toggle -->
-    <div class="tgl">
-      <div class="top sqp">
-        <div class="bas sqp">
+    <div class="toggle">
+      <div class="toggle-top sqp">
+        <div class="base sqp">
           <div class="sun sra">
             <svg viewBox="1.5 0.5 23 23">
-              <use href="#ray-o" />
-              <use href="#ray-y" class="ray-trn" />
+              <use href="#ray-orange" />
+              <use href="#ray-yellow" class="ray-turn" />
             </svg>
-            <div class="sun-i srp"></div>
+            <div class="sun-inner srp"></div>
           </div>
-          <div class="mon sra">
-            <div class="mon-i srp">
-              <svg viewBox="0 0 16 16"><path /></svg>
+          <div class="moon sra">
+            <div class="moon-inner srp">
+              <svg viewBox="0 0 16 16">
+                <path d="m8 0a1 1 0 000 16 .25.4 1 110-16z" />
+              </svg>
             </div>
           </div>
-          <div class="tng tng-l"></div>
+          <div class="tongue tongue-l"></div>
         </div>
-        <div class="frm sqp"></div>
+        <div class="frame sqp"></div>
         <div
-          class="hnd sra knb-l"
+          class="handle sra knob-l"
           tabindex="0"
-          onclick="knbClick()"
-          onkeydown="knbClick()"
+          onclick="knobClick()"
+          onkeydown="knobClick()"
           title="Click to toggle dark mode"
         >
-          <div class="knb sra">
-            <div class="knb-o sra"></div>
-            <div class="rng srp"></div>
+          <div class="knob sra">
+            <div class="knob-o sra"></div>
+            <div class="ring srp"></div>
           </div>
         </div>
       </div>
     </div>
     <svg class="zs">
       <defs>
-        <path id="grd" />
-        <clipPath id="knb"><path /></clipPath>
-        <clipPath id="frm"><path /></clipPath>
-        <clipPath id="tng"><path /></clipPath>
-        <symbol id="ray-o"><path /></symbol>
-        <symbol id="ray-y"><path /></symbol>
+        <clipPath id="knob">
+          <path
+            d="m18 18 m0-18a1 1 0 000 36 1 1 0 000-36zm0 18m0-12a1 1 0 000 24 1 1 0 000-24z"
+          />
+        </clipPath>
+        <clipPath id="frame">
+          <path
+            d="m16 0a1 1 0 000 32h48a1 1 0 000-32z m0 4a1 1 0 000 24h48a1 1 0 000-24z"
+          />
+        </clipPath>
+        <clipPath id="tongue">
+          <path
+            d="m12 0a1 1 0 000 24h96a1 1 0 000-24zm48 0a1 1 0 000 24 1 1 0 000-24z"
+          />
+        </clipPath>
+        <symbol id="ray-orange"><path /></symbol>
+        <symbol id="ray-yellow"><path /></symbol>
       </defs>
     </svg>
-    <script defer src="toggle.js"></script>
+    <script defer src="public/toggle.js"></script>
     <!-- Application -->
     <div id="root"></div>
     <script type="module" src="frontend/index.tsx"></script>
