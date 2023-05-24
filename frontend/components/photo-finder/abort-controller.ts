@@ -9,7 +9,7 @@ export const useAbortController = (): [
   )
 
   const reset = () => {
-    controller.abort()
+    controller.abort() // will NOP if aborted
     const newController = new AbortController()
     setController(newController)
     return newController

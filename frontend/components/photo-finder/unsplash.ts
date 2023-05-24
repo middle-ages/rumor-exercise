@@ -24,11 +24,17 @@ export interface UnsplashResults {
   results: UnsplashResult[]
 }
 
+export const emptyResults: UnsplashResults = {
+  total: 0,
+  results: [],
+}
+
 export const searchUnsplash = async (
   search: UnsplashSearch,
   controller: AbortController,
 ): Promise<UnsplashResults> => {
   const response = await fetch(makeUrl(search), { signal: controller.signal })
+  if (!response.ok) throw new Error('Response error: ' + response.statusText)
   const json = (await response.json()) as UnsplashResults
   return {
     ...json,
