@@ -29,12 +29,20 @@ export const emptyResults: UnsplashResults = {
   results: [],
 }
 
+export const initSearch = (query = ''): UnsplashSearch => ({
+  page: 1,
+  perPage: 3,
+  query,
+})
+
 export const searchUnsplash = async (
   search: UnsplashSearch,
   controller: AbortController,
 ): Promise<UnsplashResults> => {
   const response = await fetch(makeUrl(search), { signal: controller.signal })
-  if (!response.ok) throw new Error('Response error: ' + response.statusText)
+  if (!response.ok) {
+    throw new Error(`${response.status} ${response.statusText}`)
+  }
   const json = (await response.json()) as UnsplashResults
   return {
     ...json,
@@ -52,9 +60,5 @@ function makeUrl({ page, perPage, query }: UnsplashSearch) {
 }
 
 function getClientId(): string {
-  //  const clientId = import.meta.env.UNSPLASH_API_TOKEN
-  //  if (clientId === undefined)
-  //    throw new Error('Cannot boot because UNSPLASH_API_TOKEN unset')
-  //  return clientId
-  return 'ta4Zr4lFqAurRiOxAtPEvcYPVlvkjpSGXQ29O9zqipk'
+  return ''
 }

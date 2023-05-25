@@ -1,24 +1,22 @@
 import React from 'react'
 import { SearchBox } from './photo-finder/search-box.js'
-import type { PhotoFinderStateEffect } from './photo-finder/state.js'
-import { usePhotoFinderState } from './photo-finder/use-state.js'
+import { usePhotoFinderState } from './photo-finder/state-hook.js'
 //import { useDebounce } from 'react-use'
 
 export const PhotoFinder: React.FC = () => {
   const {
-    setCurrentQuery,
-    state: {
-      currentQuery,
-      results: { length },
-    },
-  }: PhotoFinderStateEffect = usePhotoFinderState()
+    results,
+    search: { query },
+    setQuery,
+  } = usePhotoFinderState()
 
   return (
     <div>
-      <div>currentQuery(PhotoFinder)={currentQuery}</div>
-      <div>currentResultCount(PhotoFinder)={length}</div>
+      <div>query(PhotoFinder)={query}</div>
+      <div>total(PhotoFinder)={results?.total ?? 'NONE'}</div>
+      <div>got(PhotoFinder)={results?.results.length ?? 'NONE'}</div>
       <div>
-        <SearchBox {...{ currentQuery, setCurrentQuery }} />
+        <SearchBox {...{ setQuery }} />
       </div>
     </div>
   )

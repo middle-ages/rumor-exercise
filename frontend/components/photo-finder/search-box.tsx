@@ -3,16 +3,17 @@ import React from 'react'
 export type ChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => void
 
 export interface SearchBoxProps {
-  setCurrentQuery: (currentQuery: string) => void
+  setQuery: (query: string) => void
 }
 
-export const SearchBox: React.FC<SearchBoxProps> = ({ setCurrentQuery }) => {
+export const SearchBox: React.FC<SearchBoxProps> = ({ setQuery }) => {
   const [value, setValue] = React.useState('')
 
   const onChange: ChangeHandler = event => {
-    const value = event.target.value
-    setValue(value) // immediate feedback
-    setCurrentQuery(value) // restart search with new query, possibly debounced
+    const newValue = event.target.value
+    if (value === newValue) return
+    setValue(newValue) // immediate feedback
+    setQuery(newValue) // restart search with new query, possibly debounced
   }
 
   return (
