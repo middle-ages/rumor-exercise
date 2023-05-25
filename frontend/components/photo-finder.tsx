@@ -1,29 +1,33 @@
 import React from 'react'
-import { SearchBox } from './photo-finder/search-box.js'
 import { ResultBox } from './photo-finder/result-box.js'
+import { SearchBox } from './photo-finder/search-box.js'
 import { usePhotoFinder } from './photo-finder/search-hook.js'
+import { computePageCount } from './photo-finder/unsplash.js'
 
 const Spacer = () => <div style={{ flex: 1 }} />
 
-export const PhotoFinder: React.FC = () => {
-  const { currentQuery, error, isLoading, page, results, setQuery } =
-    usePhotoFinder()
+const Status = ({ label }: { label: string }) => (
+  <div style={{ paddingLeft: '2ch' }}>{label}</div>
+)
 
-  const [isFirst, isLast] =
-    results === undefined
-      ? [true, true]
-      : [page === 0, results.totalPages - 1 === page]
+export const PhotoFinder: React.FC = () => {
+  const { error, isLoading, page, results, ...rest } = usePhotoFinder()
+
+  const pageCount =
+      results?.total === undefined ? 0 : computePageCount(results.total),
+    [isFirst, isLast] =
+      results === undefined
+        ? [true, true]
+        : [page === 0, pageCount === page + 1]
 
   return (
     <div>
-      <SearchBox
-        {...{ results, setQuery, currentQuery, isLoading, isFirst, isLast }}
-      />
+      <SearchBox {...{ isLoading, results, isFirst, isLast, ...rest }} />
       {error === undefined ? (
         isLoading ? (
-          'Searching...'
+          <Status label="Searching..." />
         ) : results === undefined ? (
-          'Ready.'
+          <Status label="Ready." />
         ) : (
           <ResultBox {...results} />
         )

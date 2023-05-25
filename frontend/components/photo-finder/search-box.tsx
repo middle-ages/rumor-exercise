@@ -1,11 +1,14 @@
 import React from 'react'
-import { UnsplashResults } from './unsplash.js'
+import { UnsplashResults, UnsplashSearch } from './unsplash.js'
 
 const toggleHeightPx = 48
 
 export type ChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => void
 
 export interface SearchBoxProps {
+  search: UnsplashSearch
+  nextPage: () => void
+  previousPage: () => void
   results: UnsplashResults | undefined
   isLoading: boolean
   isFirst: boolean
@@ -19,6 +22,8 @@ export const SearchBox: React.FC<SearchBoxProps> = ({
   isFirst,
   isLast,
   isLoading,
+  nextPage,
+  previousPage,
   results,
   setQuery,
 }) => {
@@ -42,8 +47,12 @@ export const SearchBox: React.FC<SearchBoxProps> = ({
   return (
     <div style={{ height: toggleHeightPx, padding: toggleHeightPx / 4 }}>
       <input placeholder="Enter keywords..." {...{ value, onChange }} />
-      <button disabled={disablePrevious}>Previous</button>
-      <button disabled={disableNext}>Next</button>
+      <button onClick={previousPage} disabled={disablePrevious}>
+        Previous
+      </button>
+      <button onClick={nextPage} disabled={disableNext}>
+        Next
+      </button>
     </div>
   )
 }

@@ -1,6 +1,8 @@
 const URL = '/unsplash'
 
-const perPage = 30
+const perPage = 40
+
+export const computePageCount = (n: number) => 1 + Math.floor(n / perPage)
 
 export interface UnsplashSearch {
   query: string
@@ -11,6 +13,7 @@ export interface UnsplashSearch {
 export type PhotoUrlKeys = 'full' | 'small' | 'thumb'
 export type PhotoUrls = Record<PhotoUrlKeys, string>
 
+/** As received from service */
 export interface RawUnsplashResult {
   id: string
   description?: string | null
@@ -18,6 +21,7 @@ export interface RawUnsplashResult {
   urls: PhotoUrls
 }
 
+/** Normalized as received by components */
 export interface UnsplashResult {
   id: string
   description: string
@@ -26,13 +30,11 @@ export interface UnsplashResult {
 
 export interface UnsplashResults {
   total: number
-  totalPages: number
   results: UnsplashResult[]
 }
 
 export const emptyResults: UnsplashResults = {
   total: 0,
-  totalPages: 0,
   results: [],
 }
 
@@ -48,14 +50,15 @@ export const searchUnsplash = async (
 ): Promise<UnsplashResults> => {
   const response = await fetch(makeUrl(search), { signal: controller.signal })
   if (!response.ok) throw new Error(`${response.status} ${response.statusText}`)
-  const json = (await response.json()) as UnsplashResults
 
-  // normalize result descriptions
-  const results = json.results.map(result => {
+  const results = (await response.json()) as UnsplashResults
+  return { ...results, results: normalizeResults(results) }
+}
+
+function normalizeResults(results: UnsplashResults) {
+  return results.results.map(result => {
     const { altDescription, description, ...rest } = result as RawUnsplashResult
 
-    // seems when description are missing they are “null”, but seems wise
-    // to be a bit defensive here
     const computed =
       description !== null && description !== '' && description !== undefined
         ? description
@@ -63,8 +66,6 @@ export const searchUnsplash = async (
 
     return { ...rest, description: computed }
   })
-
-  return { ...json, results }
 }
 
 function makeUrl({ page, perPage, query }: UnsplashSearch) {
