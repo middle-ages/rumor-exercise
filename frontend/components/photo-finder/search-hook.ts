@@ -1,20 +1,23 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useAbortController } from './abort-hook.js'
 import { useLoading } from './loading-hook.js'
 import type { UnsplashResults, UnsplashSearch } from './unsplash.js'
 import { emptyResults, initSearch, searchUnsplash } from './unsplash.js'
+import { useDebouncedCallback } from 'use-debounce'
 
 export const usePhotoFinder = (): {
-  isLoading: boolean
   search: UnsplashSearch
+  error: Error | undefined
+  isLoading: boolean
   results: UnsplashResults | undefined
   setQuery: (query: string) => void
-  error: Error | undefined
 } => {
   const {
+    doNotQuery,
     error,
     isLoading,
     results,
+    search,
     setDone,
     setError,
     setLoading,
@@ -23,17 +26,14 @@ export const usePhotoFinder = (): {
 
   const [controller, resetController] = useAbortController()
 
-  const [search, setSearch] = React.useState(() => initSearch())
-
-  const doNotQuery = isLoading || results !== undefined || search.query === ''
-
-  const setQuery = (newQuery: string) => {
-    if (search.query === newQuery) return
-    // every new query aborts the running query
-    resetController()
-    setSearch(initSearch(newQuery))
-    setNotLoading()
-  }
+  const setQuery = useDebouncedCallback(
+    (newQuery: string) => {
+      if (search.query === newQuery) return
+      resetController() // new query ⇒ abort existing
+      setNotLoading(initSearch(newQuery))
+    },
+    500, // msec
+  )
 
   useEffect(() => {
     if (doNotQuery) return
@@ -65,15 +65,14 @@ export const usePhotoFinder = (): {
 
     setLoading()
     void request()
-
     return setAbort
   }, [controller, doNotQuery, search, setDone, setError, setLoading])
 
   return {
-    isLoading,
     search,
+    error,
+    isLoading,
     results,
     setQuery,
-    error,
   }
 }
