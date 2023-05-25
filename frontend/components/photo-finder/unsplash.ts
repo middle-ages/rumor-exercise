@@ -1,8 +1,6 @@
-import { camelCaseKey } from '../../util.js'
+const URL = '/unsplash'
 
-const URL = 'https://api.unsplash.com/search/photos'
-
-const clientId = getClientId()
+const perPage = 30
 
 export interface UnsplashSearch {
   query: string
@@ -28,17 +26,19 @@ export interface UnsplashResult {
 
 export interface UnsplashResults {
   total: number
+  totalPages: number
   results: UnsplashResult[]
 }
 
 export const emptyResults: UnsplashResults = {
   total: 0,
+  totalPages: 0,
   results: [],
 }
 
 export const initSearch = (query = ''): UnsplashSearch => ({
-  page: 1,
-  perPage: 3,
+  page: 0,
+  perPage,
   query,
 })
 
@@ -47,11 +47,10 @@ export const searchUnsplash = async (
   controller: AbortController,
 ): Promise<UnsplashResults> => {
   const response = await fetch(makeUrl(search), { signal: controller.signal })
-  if (!response.ok) {
-    throw new Error(`${response.status} ${response.statusText}`)
-  }
+  if (!response.ok) throw new Error(`${response.status} ${response.statusText}`)
   const json = (await response.json()) as UnsplashResults
 
+  // normalize result descriptions
   const results = json.results.map(result => {
     const { altDescription, description, ...rest } = result as RawUnsplashResult
     return {
@@ -68,13 +67,8 @@ export const searchUnsplash = async (
 
 function makeUrl({ page, perPage, query }: UnsplashSearch) {
   const parameters = new URLSearchParams()
-  parameters.set('client_id', clientId)
   parameters.set('page', page.toString())
-  parameters.set('per_page', perPage.toString())
+  parameters.set('perPage', perPage.toString())
   parameters.set('query', query)
   return URL + '?' + parameters.toString()
-}
-
-function getClientId(): string {
-  return 'ta4Zr4lFqAurRiOxAtPEvcYPVlvkjpSGXQ29O9zqipk'
 }

@@ -1,14 +1,22 @@
+/// <reference lib="dom" />
+
+// note the reference lib above: Typescript d.ts does not have Node.js fetch
+// types yet so we use the browser types
+
 import express from 'express'
 import type { Express, Response, Request } from 'express'
+import { URL } from 'node:url'
 
 const port = 8888
+
+const unsplashUrl = 'https://api.unsplash.com/search/photos'
 
 const unsplashToken = process.env['UNSPLASH_API_TOKEN']
 if (unsplashToken === undefined)
   throw new Error('Cannot boot because UNSPLASH_API_TOKEN unset')
 
 interface Query {
-  find: string
+  query: string
   page: number
   perPage: number
 }
@@ -18,11 +26,13 @@ interface Query {
  *
  * Serves the following endpoints:
  *
- * 1. `GET /unsplash?find=<string>&page=<number>&perPage=<number>` ⇒ proxy
- *     request to the unsplash API
+ * 1. `GET /unsplash?query=<string>&page=<number>&perPage=<number>` ⇒ proxy
+ *     request to the unsplash API. Try this for example:
+ *     `curl -v 'localhost:8888/unsplash?page=1&perPage=2&query=cat' | jq`
+ *
  * 1. `GET /*` ⇒ static, served from `dist/frontend/*`.
- *     The files are built by Vite, where `outDir` is configured to be
- *     `dist/frontend`. Vite will copy the `public/` folder here as well
+ *    The folder `dist/frontend` is populated with `vite build`
+ *    Vite will also copy the `public/` folder there
  *
  **/
 const start = () => {
@@ -32,8 +42,15 @@ const start = () => {
 
   app.get('/unsplash', (request: Request, response: Response) => {
     const query: Query = parseQuery(request)
-    console.log(query)
-    response.status(200).send('hello')
+    const url = makeUnsplashUrl(query)
+
+    fetch(url)
+      .then((results: globalThis.Response) => results.json())
+      .then(json => response.json(json))
+      .catch(error => {
+        console.error(`Unsplash error: ${(error as Error).toString()}`)
+        response.status(500).send()
+      })
   })
 
   const server = app.listen(port, () =>
@@ -49,13 +66,23 @@ const start = () => {
 start()
 
 function parseQuery({
-  query: { find = '', page = '1', perPage = '10' },
+  query: { page = '1', perPage = '10', query = '' },
 }: Request): Query {
   return {
-    find: forceString(find),
+    query: forceString(query),
     page: forceNumber(page),
     perPage: forceNumber(perPage),
   }
+}
+
+function makeUnsplashUrl({ page, perPage, query }: Query) {
+  const url = new URL(unsplashUrl)
+  const parameters = url.searchParams
+  parameters.set('client_id', unsplashToken ?? '')
+  parameters.set('page', page.toString())
+  parameters.set('per_page', perPage.toString())
+  parameters.set('query', query)
+  return url.toString()
 }
 
 function forceNumber(s: unknown): number {

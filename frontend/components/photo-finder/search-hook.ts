@@ -5,14 +5,17 @@ import { useLoading } from './loading-hook.js'
 import type { UnsplashResults, UnsplashSearch } from './unsplash.js'
 import { emptyResults, initSearch, searchUnsplash } from './unsplash.js'
 
-const debounceMilliseconds = 4000
+const debounceMilliseconds = 800
 
 export const usePhotoFinder = (): {
-  search: UnsplashSearch
+  page: number
   error: Error | undefined
   isLoading: boolean
   results: UnsplashResults | undefined
+  currentQuery: string
   setQuery: (query: string) => void
+  nextPage: (search: UnsplashSearch) => void
+  previousPage: (search: UnsplashSearch) => void
 } => {
   const {
     doNotQuery,
@@ -69,10 +72,13 @@ export const usePhotoFinder = (): {
   }, [controller, doNotQuery, search, setDone, setError, setLoading, setQuery])
 
   return {
-    search,
+    page: search.page,
     error,
     isLoading,
     results,
     setQuery,
+    currentQuery: search.query,
+    previousPage: search => setNotLoading({ ...search, page: search.page - 1 }),
+    nextPage: search => setNotLoading({ ...search, page: search.page + 1 }),
   }
 }
