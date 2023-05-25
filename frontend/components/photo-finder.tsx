@@ -2,7 +2,6 @@ import React from 'react'
 import { SearchBox } from './photo-finder/search-box.js'
 import { ResultBox } from './photo-finder/result-box.js'
 import { usePhotoFinder } from './photo-finder/search-hook.js'
-//import { useDebounce } from 'react-use'
 
 const Spacer = () => <div style={{ flex: 1 }} />
 

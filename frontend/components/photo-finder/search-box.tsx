@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 export type ChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => void
 
@@ -13,9 +13,8 @@ export const SearchBox: React.FC<SearchBoxProps> = ({ setQuery }) => {
     const newValue = event.target.value
     if (value === newValue) return
     setValue(newValue) // immediate feedback
-    setQuery(newValue) // restart search with new query, possibly debounced
+    setQuery(newValue) // restart search with new debounced query
   }
-
   return (
     <div>
       <div>shown(SearchBox)={value}</div>

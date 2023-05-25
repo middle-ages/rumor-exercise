@@ -1,9 +1,11 @@
 import { useEffect } from 'react'
+import { useDebouncedCallback } from 'use-debounce'
 import { useAbortController } from './abort-hook.js'
 import { useLoading } from './loading-hook.js'
 import type { UnsplashResults, UnsplashSearch } from './unsplash.js'
 import { emptyResults, initSearch, searchUnsplash } from './unsplash.js'
-import { useDebouncedCallback } from 'use-debounce'
+
+const debounceMilliseconds = 4000
 
 export const usePhotoFinder = (): {
   search: UnsplashSearch
@@ -26,14 +28,11 @@ export const usePhotoFinder = (): {
 
   const [controller, resetController] = useAbortController()
 
-  const setQuery = useDebouncedCallback(
-    (newQuery: string) => {
-      if (search.query === newQuery) return
-      resetController() // new query ⇒ abort existing
-      setNotLoading(initSearch(newQuery))
-    },
-    500, // msec
-  )
+  const setQuery = useDebouncedCallback((newQuery: string) => {
+    if (search.query === newQuery) return
+    resetController() // new query ⇒ abort existing
+    setNotLoading(initSearch(newQuery))
+  }, debounceMilliseconds)
 
   useEffect(() => {
     if (doNotQuery) return
@@ -63,10 +62,11 @@ export const usePhotoFinder = (): {
       else setDone(result)
     }
 
+    setQuery.cancel() // cancel running debounces
     setLoading()
     void request()
     return setAbort
-  }, [controller, doNotQuery, search, setDone, setError, setLoading])
+  }, [controller, doNotQuery, search, setDone, setError, setLoading, setQuery])
 
   return {
     search,
