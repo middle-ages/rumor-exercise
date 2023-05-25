@@ -10,6 +10,8 @@ A programming exercise.
 1. [Design](#design)
 1. [Implementation](#implementation)
    1. [Infrastructure](#infrastructure)
+   1. [Files and Folders ](#files-and-folders)
+1. [Known Issues](#known-issues)
 
 ## Try It
 
@@ -90,7 +92,11 @@ While we could use the same configuration to build for the browser, it is not
 practical yet, if only because it would hurt time to [First Contentful
 Paint](https://web.dev/fcp/).
 
-## Known Issues/Reviewers Guide
+### Files and Folders
+
+![Directory tree from my terminal](dir-tree.png)
+
+## Known Issues
 
 Need a couple more hours to fix, ping me if you think it would help you decide
 and I will complete these:
@@ -127,3 +133,5 @@ and I will complete these:
 9. Descriptions should be always shown, requiring user to lay motionless and wait
    for a tooltip to appear over an image is evil
 10. That toggle button should be made into a React component
+
+
