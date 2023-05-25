@@ -4,31 +4,42 @@ import { useLoading } from './loading-hook.js'
 import type { UnsplashResults, UnsplashSearch } from './unsplash.js'
 import { emptyResults, initSearch, searchUnsplash } from './unsplash.js'
 
-export const usePhotoFinderState = (): {
+export const usePhotoFinder = (): {
+  isLoading: boolean
   search: UnsplashSearch
   results: UnsplashResults | undefined
   setQuery: (query: string) => void
+  error: Error | undefined
 } => {
-  const { isLoading, results, setDone, setLoading, setNotLoading } =
-    useLoading()
+  const {
+    error,
+    isLoading,
+    results,
+    setDone,
+    setError,
+    setLoading,
+    setNotLoading,
+  } = useLoading()
 
-  const [isAborted, controller, resetController] = useAbortController()
+  const [controller, resetController] = useAbortController()
 
   const [search, setSearch] = React.useState(() => initSearch())
 
-  const [query, hasResults] = [search.query, results !== undefined]
+  const doNotQuery = isLoading || results !== undefined || search.query === ''
 
   const setQuery = (newQuery: string) => {
-    if (query === newQuery) return
+    if (search.query === newQuery) return
+    // every new query aborts the running query
     resetController()
     setSearch(initSearch(newQuery))
     setNotLoading()
   }
 
   useEffect(() => {
-    if (isLoading || hasResults || search.query === '') return
+    if (doNotQuery) return
 
     const [setAbort, isAbort] = (() => {
+      // Trick is taken from https://react.dev/reference/react/useEffect#fetching-data-with-effects
       let abort = false
       return [
         () => {
@@ -42,9 +53,10 @@ export const usePhotoFinderState = (): {
       let result: UnsplashResults = emptyResults
       try {
         result = await searchUnsplash(search, controller)
-      } catch (error) {
+      } catch (rawError) {
+        const error = rawError as Error
         // ignore aborts
-        if ((error as Error).name !== 'AbortError') throw error
+        if (error.name !== 'AbortError') setError(error)
       }
 
       if (isAbort) controller.abort()
@@ -55,19 +67,13 @@ export const usePhotoFinderState = (): {
     void request()
 
     return setAbort
-  }, [
-    controller,
-    hasResults,
-    isAborted,
-    isLoading,
-    search,
-    setDone,
-    setLoading,
-  ])
+  }, [controller, doNotQuery, search, setDone, setError, setLoading])
 
   return {
+    isLoading,
     search,
     results,
     setQuery,
+    error,
   }
 }

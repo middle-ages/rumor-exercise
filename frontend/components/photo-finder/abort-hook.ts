@@ -1,7 +1,6 @@
 import React from 'react'
 
 export const useAbortController = (): [
-  boolean,
   AbortController,
   () => AbortController,
 ] => {
@@ -9,6 +8,7 @@ export const useAbortController = (): [
     () => new AbortController(),
   )
 
+  // abort and setup a new controller
   const reset = () => {
     controller.abort()
     const newController = new AbortController()
@@ -16,5 +16,5 @@ export const useAbortController = (): [
     return newController
   }
 
-  return [controller.signal.aborted, controller, reset]
+  return [controller, reset]
 }

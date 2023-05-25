@@ -13,9 +13,16 @@ export interface UnsplashSearch {
 export type PhotoUrlKeys = 'full' | 'small' | 'thumb'
 export type PhotoUrls = Record<PhotoUrlKeys, string>
 
+export interface RawUnsplashResult {
+  id: string
+  description?: string
+  altDescription?: string
+  urls: PhotoUrls
+}
+
 export interface UnsplashResult {
   id: string
-  altDescription: string
+  description: string
   urls: PhotoUrls
 }
 
@@ -44,10 +51,19 @@ export const searchUnsplash = async (
     throw new Error(`${response.status} ${response.statusText}`)
   }
   const json = (await response.json()) as UnsplashResults
-  return {
-    ...json,
-    results: json.results.map(camelCaseKey('altDescription')),
-  }
+
+  const results = json.results.map(result => {
+    const { altDescription, description, ...rest } = result as RawUnsplashResult
+    return {
+      ...rest,
+      description:
+        description !== undefined && description !== ''
+          ? description
+          : altDescription ?? 'No description',
+    }
+  })
+
+  return { ...json, results }
 }
 
 function makeUrl({ page, perPage, query }: UnsplashSearch) {
@@ -60,5 +76,5 @@ function makeUrl({ page, perPage, query }: UnsplashSearch) {
 }
 
 function getClientId(): string {
-  return ''
+  return 'ta4Zr4lFqAurRiOxAtPEvcYPVlvkjpSGXQ29O9zqipk'
 }
