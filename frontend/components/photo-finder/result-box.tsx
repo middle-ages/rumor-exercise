@@ -11,7 +11,7 @@ export const ResultBox: React.FC<UnsplashResults> = ({ results }) => {
         <img
           style={{ width: thumbWidthPx }}
           key={result.id}
-          alt={result.description}
+          title={result.description}
           src={result.urls.thumb}
         />
       ))}

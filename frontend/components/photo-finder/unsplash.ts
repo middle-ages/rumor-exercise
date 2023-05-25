@@ -13,8 +13,8 @@ export type PhotoUrls = Record<PhotoUrlKeys, string>
 
 export interface RawUnsplashResult {
   id: string
-  description?: string
-  altDescription?: string
+  description?: string | null
+  altDescription?: string | null
   urls: PhotoUrls
 }
 
@@ -53,13 +53,15 @@ export const searchUnsplash = async (
   // normalize result descriptions
   const results = json.results.map(result => {
     const { altDescription, description, ...rest } = result as RawUnsplashResult
-    return {
-      ...rest,
-      description:
-        description !== undefined && description !== ''
-          ? description
-          : altDescription ?? 'No description',
-    }
+
+    // seems when description are missing they are “null”, but seems wise
+    // to be a bit defensive here
+    const computed =
+      description !== null && description !== '' && description !== undefined
+        ? description
+        : altDescription ?? 'Sadly, no description on this image'
+
+    return { ...rest, description: computed }
   })
 
   return { ...json, results }
