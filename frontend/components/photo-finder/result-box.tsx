@@ -9,7 +9,7 @@ export const ResultBox: React.FC<UnsplashResults> = ({ results }) => {
     <div>
       {results.map(result => (
         <img
-          style={{ width: thumbWidthPx }}
+          style={{ width: thumbWidthPx, cursor: 'pointer' }}
           key={result.id}
           title={result.description}
           src={result.urls.thumb}

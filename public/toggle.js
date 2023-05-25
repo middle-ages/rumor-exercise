@@ -13,7 +13,9 @@ const toggleClass = (find, cls) => {
 }
 
 const toggle = () => {
-  setTheme(isPageDark() ? "light" : "dark")
+  const scheme =isPageDark() ? "light" : "dark"
+  setTheme(scheme)
+  document.documentElement.style.colorScheme = scheme
   toggleClass(".handle", "knob-l")
   toggleClass(".tongue", "tongue-l")
 }

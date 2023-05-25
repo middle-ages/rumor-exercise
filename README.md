@@ -92,11 +92,15 @@ Paint](https://web.dev/fcp/).
 
 ## Known Issues/Reviewers Guide
 
+Need a couple more hours to fix, ping me if you think it would help you decide
+and I will complete these:
+
 1. No placeholders for loading images
 2. Error handling and recovery is sketchy at best
 3. Client must wait for BOTH requests to complete. Would be better to merge the
    results on the client
-4. CSS is all over the place and should be refactored
+4. CSS is all over the place and should be refactored, not to mention the
+   brutalist style of the default controls which must be changed
 5. Infinite scrolling masonry layout was out of my time budget so focused on the
    pagination aspect: it looks a little bit like a responsive masonry layout,
    but uses the primitive back/forward mechanism for browsing. In retrospect
@@ -119,3 +123,7 @@ Paint](https://web.dev/fcp/).
      Most of the testing is made easier by throttling in Chrome dev tools, testing
      in the `network` tab that requests are canceled correctly. However did not
      test that debouncing cancels correctly, though I suspect it does
+8. Some zoom on hover that will hint that clicking will fully zoom would be nice
+9. Descriptions should be always shown, requiring user to lay motionless and wait
+   for a tooltip to appear over an image is evil
+10. That toggle button should be made into a React component

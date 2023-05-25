@@ -7,12 +7,6 @@ html[data-theme="light"] {
 
   /* Page background color */
   --page-bg: #f0f0f0;
-
-  /* Diagram background color */
-  --diagram-bg: #dedede;
-
-  /* Diagram separator */
-  --diagram-sep: #666;
 }
 
 html[data-theme="light"] .handle {

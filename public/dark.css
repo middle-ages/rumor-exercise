@@ -2,8 +2,6 @@ html[data-theme="dark"] {
   --label-bg: #444;
   --border-bg: #333;
   --page-bg: #000;
-  --diagram-bg: #555;
-  --diagram-sep: #333;
 }
 
 html[data-theme="dark"] .handle {
