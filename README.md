@@ -15,6 +15,8 @@ A programming exercise.
 
 ### Online Sandbox
 
+Will be available once I set it up
+
 ### Locally
 
 Requires Node.js, pnpm (versions in [package.json](package.json)), and a
@@ -97,3 +99,10 @@ Paint](https://web.dev/fcp/).
 3. Client must wait for BOTH requests to complete. Would be better to merge the
    results on the client
 4. CSS is all over the place and should be refactored
+5. Infinite scrolling masonry layout was out of my time budget so focued on the
+   pagination aspect: it looks a little bit like a responsive masonry layout,
+   but uses the primitive back/forward mechanism for browsing. In retrospect
+   should have used a 3rd party commercial component which does this
+   out-of-the-box
+
+
