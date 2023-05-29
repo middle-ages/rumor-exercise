@@ -41,7 +41,7 @@
   left: calc(100% - var(--toggle-w));
 }
 
-.toggle * {
+html * {
   transition: all 0.25s ease-in-out;
 }
 
